@@ -19,7 +19,7 @@
         * [テンプレートエイリアス](chapter_1/core_features.md)
         * [テンプレートパック](chapter_1/core_features.md)
         * [文字列リテラル](chapter_1/core_features.md)
-        * [ユーザ定義リテラル](chapter_1/core_features.m)
+        * [ユーザ定義リテラル](chapter_1/core_features.md)
    * [ライブラリ](chapter_1/library_featrues.md)
         * [Array](chapter_1/library_features.md)
         * [Function](chapter_1/library_features.md)
