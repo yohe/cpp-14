@@ -15,7 +15,7 @@
         * [コンストラクタ移譲](chapter_1/core_features.md)
         * [明示的な仮想関数オーバーライド](chapter_1/core_features.md)
         * [明示的なデフォルト関数](chapter_1/core_features.md)
-        * [Delete関数](chapter_1/core_features.md)
+        * [Deleted関数](chapter_1/core_features.md)
         * [Scoped Enum](chapter_1/core_features.md)
         * [Template alias](chapter_1/core_feature.md)
         * [Tempate packs](chapter_1/core_features.md)
