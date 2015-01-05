@@ -1,4 +1,4 @@
-GitBook Example
+まえがき
 =======
 
 Welcome in your GitBook!
