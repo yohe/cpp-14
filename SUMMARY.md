@@ -1,4 +1,5 @@
 # Summary
 
-* [Introduction](chapter_1/introduction.md)
+* [Introduction](README.md)
+* [まえがき](chapter_1/introduction.md)
 
