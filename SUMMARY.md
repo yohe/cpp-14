@@ -17,7 +17,7 @@
         * [明示的なデフォルト関数](chapter_1/core_features.md)
         * [Deleted関数](chapter_1/core_features.md)
         * [Scoped Enum](chapter_1/core_features.md)
-        * [テンプレートエイリアス](chapter_1/core_feature.md)
+        * [テンプレートエイリアス](chapter_1/core_features.md)
         * [テンプレートパック](chapter_1/core_features.md)
         * [文字列リテラル](chapter_1/core_features.md)
         * [ユーザ定義リテラル](chapter_1/core_features.m)
