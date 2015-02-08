@@ -1,2 +1,2 @@
 ## 言語機能
-[auto](#auto.md)
+[auto](chapter_1/auto.md)
