@@ -8,6 +8,6 @@ C++03からの大きな言語拡張になっており、C++言語の生みの親
 
 これから紹介するC++11の拡張機能がどのコンパイラで使用可能であるかについては、以下のサイトを参考にすると良い。
 
- * [比較サイト][http://wiki.apache.org/stdcxx/C%2B%2B0xCompilerSupport]
+ * [比較サイト](http://wiki.apache.org/stdcxx/C%2B%2B0xCompilerSupport)
 
 
