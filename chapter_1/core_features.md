@@ -1,2 +1,2 @@
 ## 言語機能
-[auto](#auto)
+[auto](#auto.md)
