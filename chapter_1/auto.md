@@ -56,8 +56,10 @@ decltype指定子とは、decltype(式)という記述で型を表すことが�
 ```
 double f();
 
-auto i=1;           //i is int
-decltype(i) j;      //j is int
+auto i=0;           //i is int
+decltype(i++) j;    //j is int
 decltype(f()) d;    //d is double
+
+std::cout << i << std::endl; // 0
 ```
 
