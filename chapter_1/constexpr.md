@@ -11,8 +11,6 @@
  * テンプレート関数宣言,定義
  * リテラル型staticメンバ変数宣言
 
-**サンプル**
-
 ```c++
 constexpr int square(int x);            //OK    関数宣言
 constexpr int bufsz = 1024              //OK    変数定義
