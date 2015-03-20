@@ -12,7 +12,7 @@ f(X*);
 void fun() {
     f(10);      //ok f(int)
     f(0);       //error f(int), f(X*)のどちらか判別不可能
-    f(nullptr)  //ok f(X*)
+    f(nullptr); //ok f(X*)
 }
 ```
 
