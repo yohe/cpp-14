@@ -31,8 +31,6 @@ public:
        );
    }
 
-   int f() {
-   }
 };
 ```
 
@@ -76,5 +74,19 @@ void func() {
         b=a;        //OK
         c=a;        //error
     };
+}
+```
+
+ラムダ関数の定義は、最終的にテンポラリオブジェクトとして評価されるため、変数への格納や、そのまま実行することも可能である。
+
+```c++
+void func() {
+    auto f = []() {
+        std::cout << "hello world!" << std::endl;
+    };
+    
+    []() { 
+        std::cout << "hello world!" << std::endl;
+    }();
 }
 ```
