@@ -6,18 +6,18 @@ R-value referenceとは、rvalueの参照を示す。rvalueとは一時的なオ
 R-value referenceの構文は次のように "&" を２つ重ねて定義する。
 `int && rref = 5;`
 
-{{{
+```c++
 int main(int argc, char const * argv) {
     int x;
     int && rref1 = x;       //error xはlvalue
     int && rref2 = 0;       //OK
 }
-}}}
+```
 
 このR-value referenceはどのような場面で使用するかというと、コピーのコストが非常に大きいオブジェクトの構築などがある。
 以下のような状況を考える。
 
-{{{
+```c++
 
 class HeavyCopy {
 public:
@@ -39,7 +39,7 @@ int main(int argc, char const * argv) {
     return 0;
 }
 
-}}}
+```
 
 コンパイラによる最適化が何も無いと考えた場合、tmpはコピーコンストラクタが呼び出されるはずである。関数funcの戻り値は前述の通り、rvalueであり、直ぐに破棄されることになる。破棄されるのであれば、上記の例においてポインタdataの受け渡しのみでも良いはずである。そこで、このR-value referenceが役立つのである。rvalueのデータをlvalueへ移動させて構築が行われるため、これをムーブセマンティクスと呼ぶ。ムーブセマンティクスとは所有権の移譲である。ムーブセマンティクスを実現するために、クラスにはムーブコンストラクタ、ムーブ代入演算子が特別関数に追加された。
 
