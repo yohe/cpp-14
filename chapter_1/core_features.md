@@ -9,6 +9,7 @@
  * [初期化リスト](initializer_list.md)
  * [Range-based for loop](range_based_for.md)
  * [ラムダ関数](lambda_expression.md)
- * [コンストラクタ委譲](inherit_constructor.md)
+ * [メンバ変数初期化構文](member_variable_initialize.md)
+ * [コンストラクタ移譲](delegate_constructor.md)
 
 上記の各項目に関する説明は、それぞれの項目内を参照。
