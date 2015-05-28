@@ -11,7 +11,7 @@
         * [static assert](static_assert.md)
         * [マルチスレッドサポート](multi_thread.md)
         * [R-value reference](r_value_ref.md)
-        * [メンバ変数初期化構文](member_variable_initialize.md)
+        * [メンバ変数のデフォルト初期化](member_variable_initialize.md)
         * [コンストラクタ移譲](delegate_constructor.md)
         * [明示的な仮想関数オーバーライド](explicit_override.md)
         * [明示的なデフォルト関数](explicit_default_func.md)
