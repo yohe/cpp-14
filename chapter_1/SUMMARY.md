@@ -14,7 +14,7 @@
         * [メンバ変数のデフォルト初期化](member_variable_initialize.md)
         * [コンストラクタ移譲](delegate_constructor.md)
         * [明示的な仮想関数オーバーライド](explicit_override.md)
-        * [明示的なデフォルト関数](explicit_default_func.md)
+        * [明示的なdefault/delete関数](explicit_default_func.md)
         * [Deleted関数](deleted_func.md)
         * [Scoped Enum](scoped_enum.md)
         * [テンプレートエイリアス](template_alias.md)
