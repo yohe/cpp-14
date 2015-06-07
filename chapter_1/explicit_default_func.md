@@ -5,7 +5,7 @@ C++11では、関数に対してdefault定義を自動で与えること、お�
 以下で、それぞれについて説明する。
 
 ** 明示的なdefault関数 **
-関数定義において、以下のような記述を、明示的なデフォルト化(*explicitly-defaulted*)定義と呼ぶ。そしてその関数をデフォルト化関数と呼ぶ。
+関数定義において、以下のような記述を、明示的なデフォルト化(*explicitly-defaulted*)定義と呼ぶ。そしてその関数をデフォルト化関数(*defaulted function*)と呼ぶ。
 
 `関数宣言 = default;`
 
@@ -21,14 +21,46 @@ C++11では、関数に対してdefault定義を自動で与えること、お�
  * コピー/ムーブ 代入演算子
   - デフォルト定義内容：クラスのサブオブジェクトに対して、メンバ毎のコピー/ムーブを行う。この時、基本クラス(継承の記述順)、自身のメンバの順で行われる。
 
-デフォルト定義には明示的なデフォルト化と暗黙的な宣言の両方が含まれ、定義内容として、対象の関数が delete 関数として定義されることも含む。
+デフォルト化関数には明示的なデフォルト化と暗黙的な宣言の両方が含まれ、定義内容はコンパイラ定義となり、定義内容には対象の関数が delete 関数として定義されることも含む。
 delete定義される条件については規格を参照。
 
 クラス宣言時に指定すると、その関数はインライン扱いとなる。
 また、クラス宣言時とは異なる場所で、default指定による定義も可能である。その場合、その場所で定義されたものとして扱われる(インライン化されない)。
+またこの時、対象の関数が暗黙的にdeleted関数として定義される場合は、ill-formedとなる。
 
 ```
+class X{
+public:
+  X() = default;            //OK
+  X(int) = default;         //error 特別なメンバ関数ではない
+  X(const X&) = default;    //OK
+
+  X(X&&);
+};
+
+X::X(X&& v) = default;      //OK インライン化されない
 ```
 
 ** delete 関数 **
+delete定義された関数をdelete関数(*deleted function*)と呼ぶ。delete定義とはコンパイラに対して、対象の関数が使用不可であることを明示することである。
+delete定義は全ての関数に対して定義可能であり、delete定義された関数が、評価される/されないに関わらず参照される場合ill-formedとなる。
+
+delete定義は最初の関数宣言時に指定しなければならない。
+
+```
+class X {
+public:
+  X();
+  X(const X&) = delete;     //OK
+};
+X::X() = delete;            //error 最初の宣言ではない
+
+struct sometype {
+  void *operator new(std::size_t) = delete;
+  void *operator new[](std::size_t) = delete;
+}
+
+sometype *p = new sometype;     //error deleted関数の参照
+sometype *q = new sometype[3];  //error deleted関数の参照
+```
 
