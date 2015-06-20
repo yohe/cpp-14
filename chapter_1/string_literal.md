@@ -11,7 +11,7 @@ C++03では2種類の文字列リテラルが存在していた。通常のダ�
 | u8"文字列..." | UTF-8にエンコード済み文字列 要素数 n の const char 配列 | C++11 |
 | u"文字列..." | UTF-16にエンコード済み文字列 要素数 n の const char16_t 配列 | C++11 |
 | U"文字列..." | UTF-32にエンコード済み文字列 要素数 n の const char32_t 配列 | C++11 |
-| R"\[delimiter](文字列...)[delimiter]"<BR>delimiterは省略可能 | 要素数 n (型は"R"の前に指定したencoding prefix [L, u8, u, U] に依存) | C++11 |
+| R"\[delimiter\](文字列...)[delimiter]"<BR>delimiterは省略可能 | 要素数 n (型は"R"の前に指定したencoding prefix [L, u8, u, U] に依存) | C++11 |
 ※ UTF : UCS Transformation Formatを指す。(ISO10646)
 
 R"xxx"の文字列リテラル以外は、L"xxx"の場合と同様なイメージで使用できる。
