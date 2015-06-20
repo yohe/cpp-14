@@ -14,4 +14,4 @@ C++03では2種類の文字列リテラルが存在していた。通常のダ�
 | R"[delimiter](raw string)[delimiter]" | 要素数 n (型は"R"の前に指定したencoding prefix [L, u8, u, U] に依存) | C++11 |
 ※ UTF : UCS Transformation Formatを指す。(ISO10646)
 
-R"xxx"の文字列リテラル以外は、L""の場合と同様なイメージで使用できる。
+R"xxx"の文字列リテラル以外は、L"xxx"の場合と同様なイメージで使用できる。
