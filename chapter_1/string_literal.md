@@ -78,10 +78,11 @@ ab)"cdefg
 
 
 また、文字を Universal Character Set(UCS) のコードポイントで記述することも可能となった。
+
 | シンタックス | セマンティックス | C++03/C++11 |
 | -- | -- | -- |
-|\uNNNN | ISO/IEC 10646 の 0000NNNN を示す | C++11 |
-|\UNNNNNNNN | ISO/IEC 10646 の NNNNNNNN を示す | C++11 |
+| \uNNNN | ISO/IEC 10646 の 0000NNNN を示す | C++11 |
+| \UNNNNNNNN | ISO/IEC 10646 の NNNNNNNN を示す | C++11 |
 
 
 ```
