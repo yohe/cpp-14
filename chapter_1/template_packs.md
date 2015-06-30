@@ -1,2 +1,2 @@
-### テンプレートパック
+### Variadic Template
 

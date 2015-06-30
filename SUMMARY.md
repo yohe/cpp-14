@@ -20,7 +20,7 @@
         * [noexcept](chapter_1/noexcept.md)
         * [attribute](chapter_1/attribute.md)
         * [エイリアス宣言](chapter_1/alias_decl.md)
-        * [テンプレートパック](chapter_1/template_packs.md)
+        * [Variadic Template](chapter_1/template_packs.md)
         * [文字列リテラル](chapter_1/string_literal.md)
         * [ユーザ定義リテラル](chapter_1/user_defined_literal.md)
    * [ライブラリ](chapter_1/library_featrues.md)
