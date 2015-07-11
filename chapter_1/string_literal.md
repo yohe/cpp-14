@@ -16,7 +16,7 @@ C++03では2種類の文字列リテラルが存在していた。通常のダ�
 
 R"xxx"の文字列リテラル以外は、L"xxx"の場合と同様なイメージで使用できる。またエンコードに関しては変換ライブラリも提供されている。
 
-```
+```c++
 #include <codecvt>
 
 void func() {
@@ -48,7 +48,7 @@ R"xxx"の文字列リテラルを Raw string literal と呼ぶ。これは、括
 
 以下にサンプルを示す。
 
-```
+```c++
 int main() {
     const char* raw = R"(a          //OK 改行も含む
 bcd                                 //OK 改行後も ""で括る必要なし
@@ -85,7 +85,7 @@ ab)"cdefg
 | \UNNNNNNNN | ISO/IEC 10646 の NNNNNNNN を示す | C++11 |
 
 
-```
+```c++
 int main() {
     const char16_t* s = u"\u3024いう";      //OK あいう
     return 0;

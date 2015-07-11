@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
 また、キーワード"auto"は、関数の戻り値の型推論にも使用することができる。但しreturn文からの型推論ではなく、
 trailling return typeと呼ばれる後置形の型指定の式の型推論から決定する。
 
-```
+```c++
 auto func() -> int {
     return 0;
 }

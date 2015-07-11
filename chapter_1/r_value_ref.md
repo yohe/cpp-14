@@ -47,8 +47,7 @@ int main(int argc, char const * argv) {
 
 * **ムーブコンストラクタ/ムーブ代入演算子**
 
-```
-
+```c++
 #include <utility>
 
 class X {

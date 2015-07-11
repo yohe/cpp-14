@@ -9,38 +9,39 @@ C++11では、リテラルをユーザが定義できるようになった。こ
 
 以下に構文を示す。
 
-``` result_type operator"" suffix_name (parameter list) ```
+``` result_type operator"" suffix_name (parameter list)
+```
 
 パラメータリストの形式は、値の種別毎に定義可能な形式が決められている。
 
 種別毎に形式を示す。
 
 **整数**
-result_type operator"" suffix_name (unsigned long long);
-result_type operator"" suffix_name (const char*);
-result_type operator"" suffix_name<'c1', 'c2', ... , 'ck'> ();
+* result_type operator"" suffix_name (unsigned long long);
+* result_type operator"" suffix_name (const char*);
+* result_type operator"" suffix_name<'c1', 'c2', ... , 'ck'> ();
 
 **浮動小数点**
-result_type operator"" suffix_name (long double);
-result_type operator"" suffix_name (const char*);
-result_type operator"" suffix_name<'c1', 'c2', ... , 'ck'> ();
+* result_type operator"" suffix_name (long double);
+* result_type operator"" suffix_name (const char*);
+* result_type operator"" suffix_name<'c1', 'c2', ... , 'ck'> ();
 
 **文字列**
-result_type operator"" suffix_name (const char*, size_t);
-result_type operator"" suffix_name (const wchar_t*, size_t);
-result_type operator"" suffix_name (const char16_t*, size_t);
+* result_type operator"" suffix_name (const char*, size_t);
+* result_type operator"" suffix_name (const wchar_t*, size_t);
+* result_type operator"" suffix_name (const char16_t*, size_t);
 result_type operator"" suffix_name (const char32_t*, size_t);
 ※ size_t には、null終端を抜いた文字列の長さが与えられる
 
 **文字**
-result_type operator"" suffix_name (char);
-result_type operator"" suffix_name (wchar_t);
-result_type operator"" suffix_name (char16_t);
+* result_type operator"" suffix_name (char);
+* result_type operator"" suffix_name (wchar_t);
+* result_type operator"" suffix_name (char16_t);
 result_type operator"" suffix_name (char32_t);
 
 以下に使用例を示す。
 
-```
+```c++
 std::string  operator"" _to_string(const char* number) {
     return std::string(number);
 }

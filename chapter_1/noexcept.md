@@ -16,7 +16,7 @@ noexcept オペレータは以下のような構文となる。
 
 `noexcept (定数式)`
 
-```
+```c++
 void non_throw() noexcept {}            //OK 例外を送出しない
 
 void throwfunc() noexcept(false) {}     //OK 例外を送出する可能性がある

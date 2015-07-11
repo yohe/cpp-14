@@ -8,7 +8,7 @@
 
 以下にusing宣言の使用例を示す。
 
-```
+```c++
 using Point = std::pair<int, int>;      //OK
 Point x;                                //OK
 
@@ -22,7 +22,7 @@ func_p ptr=&func;                       //OK
 
 以下のように使用する。
 
-```
+```c++
 template <class T>
 using Point = std::pair<T, T>;
 
