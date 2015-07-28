@@ -4,7 +4,7 @@
 C++11では、関数に対してdefault定義を自動で与えること、および関数を使用しないこと(delete定義)が記述可能になった。
 以下で、それぞれについて説明する。
 
-** 明示的なdefault関数 **
+##### 明示的なdefault関数
 関数定義において、以下のような記述を、明示的なデフォルト化(*explicitly-defaulted*)定義と呼ぶ。そしてその関数をデフォルト化関数(*defaulted function*)と呼ぶ。
 
 `関数宣言 = default;`
@@ -41,7 +41,7 @@ public:
 X::X(X&& v) = default;      //OK インライン化されない
 ```
 
-** delete 関数 **
+##### delete 関数
 delete定義された関数をdelete関数(*deleted function*)と呼ぶ。delete定義とはコンパイラに対して、対象の関数が使用不可であることを明示することである。
 delete定義は全ての関数に対して定義可能であり、delete定義された関数が、評価される/されないに関わらず参照される場合ill-formedとなる。
 
