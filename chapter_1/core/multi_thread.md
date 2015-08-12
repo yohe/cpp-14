@@ -28,6 +28,7 @@ C++11では、データ競合を引き起こす動作が明確に規定された
 例えばコンテナライブラリの場合、以下の関数(const指定有り)の呼び出し自体はいかなる操作であってもデータ競合は発生しない。
 
  * begin, end, rbegin, rend, front, back, data, find, lower_bound, upper_bound, equal_range, at, operator[]
+
 ※ operator[]は、連想コンテナ、非順序連想コンテナを除く
 
 ##### thread_localキーワード
