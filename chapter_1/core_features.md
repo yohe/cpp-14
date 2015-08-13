@@ -6,7 +6,7 @@
  * [auto](auto.md)
  * [nullptr](nullptr.md)
  * [定数式](constexpr.md)
- * [初期化リスト](initializer_list.md)
+ * [統一初期化構文](initializer_list.md)
  * [Range-based for loop](range_based_for.md)
  * [ラムダ関数](lambda_expression.md)
  * [メンバ変数のデフォルト初期化](member_variable_initialize.md)

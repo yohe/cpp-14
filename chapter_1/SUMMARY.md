@@ -5,7 +5,7 @@
         * [auto](core/auto.md)
         * [nullptr](core/nullptr.md)
         * [定数式](core/constexpr.md)
-        * [初期化リスト](core/initializer_list.md)
+        * [統一初期化構文](core/initializer_list.md)
         * [range-based for ループ](core/range_based_for.md)
         * [ラムダ関数](core/lambda_expression.md)
         * [static assert](core/static_assert.md)
