@@ -42,7 +42,7 @@
         * [atomic](chapter_1/library/atomic.md)
         * [thread](chapter_1/library/thread.md)
         * [mutex](chapter_1/library/mutex.md)
-        * [future](chapter_1/library/futrue.md)
+        * [future](chapter_1/library/future.md)
 * [C++14](chapter_2/README.md)
    * [言語機能](chapter_2/core_features.md)
    * [ライブラリ](chapter_2/library_features.md)
