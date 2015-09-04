@@ -84,3 +84,51 @@ int main() {
 ```
 
 ##### shared_ptr
+shared_ptrは、共有可能な所有権の提供を行う。参照カウント方式を採用しており、最後に所有権を持っている所有者が解放の義務を遂行する。
+このため、循環参照になっていると解放が行われる、メモリリークとなってしまう。
+
+これを解決するために`weak_ptr`がある。これは、shared_ptrから構築出来る所有権を持たないポインタである。
+所有権を持たないため、参照先のポインタが解放される可能性があるが、weak_ptrには、親とあるshared_ptrが有効かどうかを判定する機能がある。
+そして、有効な場合にweak_ptrからshared_ptrへの昇格を行うことでメモリアクセス出来るようになる。
+
+上記以外は、基本的な使用方法は、unique_ptrと同じである。
+ただし、unique_ptr とは異なり、コピーが可能となっている。コピーを行うことは、所有者が増えることを意味する。
+
+```c++
+#include <memory>
+#include <iostream>
+#include <cassert>
+
+struct Parent {
+    std::shared_ptr<Child> child;
+    Parent() { std::cout << "Parent destructor" << std::endl;
+};
+
+struct Child {
+    std::weak_ptr<Parent> parent;                               //循環参照をweak_ptrで回避する
+    Parent() { std::cout << "Child destructor" << std::endl;
+};
+
+int main() {
+    std::weak_ptr<int> wp;
+    {
+        std::shared_ptr<int> sp = std::shared_ptr<int>(new int(10));
+        std::cout << *sp << std::endl;
+        wp = sp;
+        if (! wp.expire() ) {                               //OK 親のshared_ptrが有効かどうか判定
+            std::cout << sp.use_count() << std::endl;       //OK 1 (所有者は1)
+            std::shared_ptr<int> sp2 = wp.lock();           //OK shared_ptrへの昇格
+            std::cout << sp.use_count() << std::endl;       //OK 2 (所有者は2)
+        }
+    }
+    assert( wp.expire() );
+
+    std::shared_ptr<Parent> p = std::shared_ptr<Parent>(new Parent);
+    std::shared_ptr<Child> c = std::shared_ptr<Child>(new Child);
+    p->child = c;                                                       //OK shared_ptrのコピー
+    c->parent = p;
+    return 0;
+}
+```
+
+
