@@ -13,11 +13,12 @@
 ##### 四則演算
 四則演算機能は、ratioクラスの*型*を引数にとり、ratioクラスを定義するエイリアステンプレートとして定義されている。
 
-|演算|エイリアステンプレート名|
-|加算|ratio_add|
-|減算|ratio_subtract|
-|乗算|ratio_multiply|
-|割算|ratio_divide|
+| 演算 | エイリアステンプレート名 |
+| -- | -- | -- |
+| 加算 | ratio_add |
+| 減算 | ratio_subtract |
+| 乗算 | ratio_multiply |
+| 割算 | ratio_divide |
 
 以下に使用方法を示す。
 
@@ -57,13 +58,14 @@ int main() {
 
 比較操作の一覧を示す。
 
-|比較|比較クラス名|
-|等号|ratio_equal|
-|不等号|ratio_not_equal|
-|未満|ratio_less|
-|以下|ratio_less_equal|
-|超過|ratio_greater|
-|以上|ratio_greater_equal|
+| 比較 | 比較クラス名 |
+| -- | -- | -- |
+| 等号 | ratio_equal |
+| 不等号 | ratio_not_equal |
+| 未満 | ratio_less |
+| 以下 | ratio_less_equal |
+| 超過 | ratio_greater |
+| 以上 | ratio_greater_equal |
 
 ```c++
 #include <iostream>
