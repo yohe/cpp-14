@@ -27,6 +27,6 @@ template <class T>
 using Point = std::pair<T, T>;
 
 Point<int> p1;      //int型のPoint
-Point<double> p2;   //int型のPoint
+Point<double> p2;   //double型のPoint
 ```
 
