@@ -14,14 +14,14 @@ system errorは幾つかのクラスに分かれており、**error_category**�
 一般カテゴリは、POSIXで定義された errno (ヘッダファイルcerrorに定義されているもの)に関連するエラーで使用される。
 システムカテゴリは、OS毎に独立したエラーを示す場合に使用される。
 
-これらのカテゴリはそれぞれ、以下の関数を用いて取得する。この関数は常に同じオブジェクトを返却する。(つまりアドレスを持つ)
+これらのカテゴリはそれぞれ、以下の関数を用いて取得する。この関数は常に同じオブジェクトを返却する。(つまり同じアドレスを持つ)
 
  * const error_category& generic_category() noexcept;
  * const error_category& system_category() noexcept;
 
 
 ##### error_code
-エラーコード値を保持するクラス。system_errorオブジェクトを構築する際にerror_codeクラスを渡すことになる。
+環境依存のエラーコード値を保持するクラス。system_errorオブジェクトを構築する際にerror_codeクラスを渡すことになる。
 error_codeクラスには、エラーコード値と、error_categoryオブジェクトを指定する。
 このクラスを使用することで、エラーコード値に対応するエラーメッセージなどを取得することができる。
 エラーコード値は、`std::errc`に列挙子として定義されているので、そちらを使用するのがよい。
@@ -40,4 +40,9 @@ int main() {
 
 
 ##### error_condition
+エラー状態を識別する環境非依存の値を保持するクラス。
+TBE
+
+##### system_error
+TBE
 
