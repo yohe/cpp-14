@@ -2,7 +2,7 @@
 ----
 #### 概要
 ライブラリchronoは、時間を扱うユーティリティ機能を提供する。
-ライブラリには、時間の単位と時間間隔を表現する`duration`、エポック時間を起点した、時刻を示すtime_point`、時計機能を提供する`clock`で構成されている。
+ライブラリには、時間の単位と時間間隔を表現する`duration`、エポック時間を起点した、時刻を示す`time_point`、時計機能を提供する `clock`で構成されている。
 
 ##### duration
 durationは単位時間を`ratio`を用いて表現し、ある時刻tから単位時間の何個分の時間間隔を示しているかを数値型を用いて管理する。
@@ -45,10 +45,10 @@ high_resolution_clockは、最も小さい単位の時計を提供する。
 
 | 定義名 | 型 |
 | -- | -- |
-| rep | unspecified |
-| period | ratio<unspecified, unspecified> |
-| duration | chrono::duration<rep, period>
-| time_point | system_clock : chrono::time_point<system_clock>[BR] other : chrono::time_point<unspecified, duration> |
+| rep | `unspecified` |
+| period | `std::ratio<unspecified, unspecified>` |
+| duration | `std::chrono::duration<rep, period>`
+| time_point | system_clock : `std::chrono::time_point<system_clock>`<BR>other : `std::chrono::time_point<unspecified, duration>` |
 
 
 
