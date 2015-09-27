@@ -41,9 +41,30 @@ high_resolution_clockは、最も小さい単位の時計を提供する。
 
 `static time_point now() noexcept`
 
+各clockの内部型は実装依存となっており、以下のような定義名が存在する。
+
+| 定義名 | 型 |
+| -- | -- |
+| rep | unspecified |
+| period | ratio<unspecified, unspecified> |
+| duration | chrono::duration<rep, period>
+| time_point | system_clock : chrono::time_point<system_clock>[BR] other : chrono::time_point<unspecified, duration> |
+
+
 
 以下にclockの使用法王を示す。
 
 ```c++
 #include <chrono>
+#include <iostream>
+
+int main() {
+    using namespace std::chrono;
+    system_clock::time_point t1 = system_clock::now();
+    for(int i=0; i < 1000; i++) {
+        std::cout << "* ";
+    }
+    system_clock::time_point t2 = system_clock::now();
+    return 0;
+}
 ```
