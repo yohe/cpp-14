@@ -20,6 +20,9 @@ durationは、基本的な演算機能を持っている。
 | 分 | std::chrono::minutes |
 | 時 | std::chrono::hours |
 
+また、durationは単位変換が可能になっている。精度が上がる場合にはそのまま代入するのみで良いが、
+精度が下がる場合には、専用のキャスト`duration_cast`を用いる。
+
 ##### time_point
 time_pointはある時刻を表現し、エポック時間からの経過時間を示す。また、time_pointは、duration型を持つことにより、時間の単位に合わせて柔軟に表現できるようになっている。
 標準で規定されているclockを使用する場合には、clockごとにtypedefでtime_pointの型が指定されているためユーザが型を機にする必要はない。
@@ -61,10 +64,38 @@ high_resolution_clockは、最も小さい単位の時計を提供する。
 int main() {
     using namespace std::chrono;
     system_clock::time_point t1 = system_clock::now();
-    for(int i=0; i < 1000; i++) {
+
+    // 時間の掛かる処理
+    for(int i=0; i < 10000; i++) {
         std::cout << "* ";
     }
     system_clock::time_point t2 = system_clock::now();
+    system_clock::duration elapsed = t2 - t1;
+
+    std::cout << std::endl;
+    if(std::ratio_equal<system_clock::period, std::nano>::value) {
+        std::cout << "nanoseconds" << std::endl;
+    }
+    if(std::ratio_equal<system_clock::period, std::micro>::value) {
+        std::cout << "microseconds" << std::endl;
+    }
+
+    std::cout << elapsed.count() << std::endl;
+
+    // 単位変換 (duration_cast)
+    milliseconds elapsed_milli = duration_cast<milliseconds>(elapsed);
+    std::cout << elapsed_milli.count() << std::endl;
+
+    // 単位変換 (精度が上がるためそのまま代入)
+    microseconds elapsed_micro = elapsed_milli;
+    std::cout << elapsed_micro.count() << std::endl;
     return 0;
-}
+```
+
+以下に実行結果を示す。
+```
+nanoseconds
+2357000
+2
+2000
 ```
