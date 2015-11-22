@@ -4,6 +4,7 @@
 R-value referenceとは、rvalueの参照を示す。rvalueとは一時的なオブジェクトや、参照でない関数の戻り値などの直ぐに破棄されるオブジェクトである。C++03で使用していた参照は、左辺値として使用できる変数(lvalue)に対するさる参照であり、C++11ではL-value referenceと呼ぶ。
 
 R-value referenceの構文は次のように "&" を２つ重ねて定義する。
+
 `int && rref = 5;`
 
 ```c++
