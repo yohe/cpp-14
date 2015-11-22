@@ -20,7 +20,7 @@ deleterとは、ポインタを解放する際の振る舞いをカスタマイ�
 
 ##### unique_ptr
 unique_ptrとは、所有権を常に一人だけが持つポインタである。よってコピー(所有権の複製)は不可で、ムーブ(所有権の移譲)のみ許可されている。
-ムーブについては[r-value reference](core/r_value_ref.md)を参照。
+ムーブについては[r-value reference](../core/r_value_ref.md)を参照。
 
 unique_ptrの構築は、管理対象のポインタを渡すだけである。C++11時点では、newにより確保したポインタを渡すため、コード上からnewを消し去ることはできない。
 C++14ではこの点が改善されておりヘルパ関数`std::make_unique`を呼び出すことでunique_ptrを構築できるようになっている。
