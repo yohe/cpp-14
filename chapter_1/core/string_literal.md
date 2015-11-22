@@ -9,10 +9,14 @@ C++03では2種類の文字列リテラルが存在していた。通常のダ�
 |  "文字列..."  | 要素数 n の const char 配列 | C++03 and C++11 |
 | L"文字列..." | 要素数 n の const wchar_t 配列 | C++03 and C++11 |
 | u8"文字列..." | UTF-8にエンコード済み文字列 要素数 n の const char 配列 | C++11 |
-| u"文字列..." | UTF-16にエンコード済み文字列 要素数 n の const char16_t 配列 | C++11 |
-| U"文字列..." | UTF-32にエンコード済み文字列 要素数 n の const char32_t 配列 | C++11 |
+| u"文字列..." | 要素数 n の const char16_t 配列<BR> | C++11 |
+| U"文字列..." | 要素数 n の const char32_t 配列<BR> | C++11 |
 | R"delimiter(文字列...)delimiter"<BR>※ delimiterは省略可能 | 要素数 n の配列(型は"R"の前に指定したencoding prefix [L, u8, u, U] に依存) | C++11 |
-※ UTF : UCS Transformation Formatを指す。(ISO10646)
+char16_t型の文字列の場合、サロゲートペア形式を用いて複数の値(例えば2文字分)を1文字として表現する可能性もある。(UCS2の場合は固定幅文字列であり、UTF-16の場合、マルチバイト文字列となる。)
+
+米 本書では、Unicodeで定義されているエンコード方式を示す場合UTFとして記載し、ISO/IEC 10646で規定されているコードポイント値を示す場合UCSとして記載する。
+
+
 
 R"xxx"の文字列リテラル以外は、L"xxx"の場合と同様なイメージで使用できる。またエンコードに関しては変換ライブラリも提供されている。
 
@@ -73,8 +77,8 @@ ab)"cdefg
 | -- | -- | -- |
 |  '文字'  | const char 型| C++03 and C++11 |
 | L'文字' | const wchar_t 型 | C++03 and C++11 |
-| u'文字' | UTF-16にエンコード済み文字 const char16_t 型<BR> ※ 一つの16bitコードで表現可能な文字のみ | C++11 |
-| U'文字' | UTF-32にエンコード済み文字 const char32_t 型 | C++11 |
+| u'文字' | const char16_t 型<BR> UCSの16bit(UCS2)で表現可能な文字のみ(基本多言語面のみを扱う) | C++11 |
+| U'文字' | const char32_t 型<BR> UCSの32bit(UCS4)で表間可能な文字のみ(UCSの全ての文字を扱う) | C++11 |
 
 
 また、文字を Universal Character Set(UCS) のコードポイントで記述することも可能となった。
