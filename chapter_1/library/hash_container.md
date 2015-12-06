@@ -23,6 +23,7 @@
 * 関数オブジェクト
 
 ```c++
+#include <unordered_map>
 struct HashKey {
     int value1;
     int vlaue2;
@@ -44,6 +45,7 @@ int main () {
 * std::hash<T>の特殊化
 
 ```c++
+#include <unordered_map>
 struct HashKey {
     int value1;
     int vlaue2;
@@ -65,4 +67,60 @@ int main () {
 }
 ```
 
+ハッシュ型の連想配列コンテナは、通常の連想配列コンテナと同じように使用する事が可能である。いかに使用方法を示す。
 
+```c++
+#include <unordered_map>
+#include <iostream>
+
+int main() {
+    std::unordered_map<char, int> u_map {
+        {'A', 1},
+        {'B', 2},
+        {'C', 3},
+        {'D', 4},
+        {'E', 5},
+        {'F', 6},
+        {'Z', 7},
+    };
+
+    for (const auto& k : u_map) {
+        std::cout << "key=" << k.first << ", value=" << k.second << std::endl;
+    }
+
+    u_map.insert(std::make_pair('G', 7));
+    u_map['Z'] = 8;
+
+    std::cout << "-----------------" << std::endl;
+
+    for (const auto& k : u_map) {
+        std::cout << "key=" << k.first << ", value=" << k.second << std::endl;
+    }
+
+    return 0;
+}
+```
+
+いかに実行結果を示す。
+```
+key=F, value=6
+key=E, value=5
+key=Z, value=7
+key=D, value=4
+key=C, value=3
+key=B, value=2
+key=A, value=1
+-----------------
+key=G, value=7
+key=F, value=6
+key=E, value=5
+key=Z, value=8
+key=D, value=4
+key=C, value=3
+key=B, value=2
+key=A, value=1
+```
+
+また、ハッシュ型連想配列コンテナには、通常の連想配列コンテナにはない、*bucket* という概念がある。
+ハッシュ型連想配列コンテナの要素は、このbucketに格納され、同じハッシュ値を持つ要素は、同じbucketに格納する事が保証されている。
+rehashを実施すると、要素間の順序が変更され、要素が格納されるバケットも変更される。つまり、rehashを行うと、その時のイテレータは無効になる。
