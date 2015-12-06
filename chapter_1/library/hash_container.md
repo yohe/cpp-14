@@ -21,6 +21,7 @@
 
 以下にハッシュ化の定義例を示す。
 * 関数オブジェクト
+
 ```c++
 struct HashKey {
     int value1;
@@ -41,6 +42,7 @@ int main () {
 ```
 
 * std::hash<T>の特殊化
+
 ```c++
 struct HashKey {
     int value1;
