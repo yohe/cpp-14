@@ -180,8 +180,6 @@ int main() {
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t, 0x10ffff, (std::codecvt_mode)1>, char16_t> ws_cvt;
     std::string str = ws_cvt.to_bytes(ucs2);
     std::cout << std::hex << "Convert : ";
-    int count = 0;
-    unsigned int v = 0;
     for(auto& c : str) {
         unsigned int v = c;
         std::cout << (0xFF&v) << ",";

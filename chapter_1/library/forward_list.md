@@ -46,7 +46,7 @@ forward_listは、size()関数が提供されないことを除き、全ての�
 
 このコンテナは、ヘッダファイル **forward_list**
 
-```
+```c++
 #include <forward_list>
 
 int main() {
