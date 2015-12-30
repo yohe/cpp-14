@@ -42,6 +42,7 @@
        * [atomic](chapter_1/library/atomic.md)
        * [thread](chapter_1/library/thread.md)
        * [mutex](chapter_1/library/mutex.md)
+       * [condition_variable](chapter_1/library/condition_variable.md)
        * [future](chapter_1/library/future.md)
 * [C++14](chapter_2/README.md)
    * [言語機能](chapter_2/core_features.md)

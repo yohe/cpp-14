@@ -34,4 +34,5 @@ C++11で追加された標準ライブラリについて紹介していく。標
  * スレッドライブラリ
   * thread
   * mutex
+  * condition_variable
   * future

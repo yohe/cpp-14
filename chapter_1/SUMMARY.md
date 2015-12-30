@@ -41,5 +41,6 @@
         * [atomic](library/atomic.md)
         * [thread](library/thread.md)
         * [mutex](library/mutex.md)
+        * [condition_variable](library/condition_variable.md)
         * [future](library/future.md)
 
