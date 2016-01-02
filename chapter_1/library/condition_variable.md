@@ -2,7 +2,7 @@
 ---
 #### 概要
 condition variableとは、wait()/notify()によるスレッド間同期機能を提供する。
-condition variableには、std::unique_lockを受け取るcondition_variableと、BasicLockableを満たす任意のmutexを受け取るcondition_variable_anyがある。
+condition variableには、std::unique_lockを受け取るcondition_variableと、BasicLockable要件を満たす任意のmutexを受け取るcondition_variable_anyがある。
 機能的には変わらないので、基本的にcondition_variableを使用すれば良い。
 
 condition_variableには、一般的なwait/notify機能が提供されている。wait機能には、通常のwait, 日時、期間指定のwaitが提供されている。
