@@ -73,7 +73,7 @@ int main() {
 }
 ```
 
-以下の出力例を以下に示す。
+出力例を以下に示す。
 ```
 UTF-8   : e3,81,82,e3,81,84,e3,81,86,e3,81,88,e3,81,8a,
 UCS-2   : 12354,12356,12358,12360,12362,
@@ -138,7 +138,7 @@ int main() {
 }
 ```
 
-以下の出力例を以下に示す。
+出力例を以下に示す。
 
 ```
 UCS-4   : 10384,
@@ -176,7 +176,7 @@ int main() {
     }
     std::cout << std::endl;
 
-    // ucs4 -> UTF-16
+    // ucs2 -> UTF-8
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t, 0x10ffff, (std::codecvt_mode)1>, char16_t> ws_cvt;
     std::string str = ws_cvt.to_bytes(ucs2);
     std::cout << std::hex << "Convert : ";
@@ -188,7 +188,7 @@ int main() {
 }
 ```
 
-以下の出力例を以下に示す。
+出力例を以下に示す。
 ```
 
 UCS-2   : d800,df84,
