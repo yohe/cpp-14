@@ -12,14 +12,35 @@ C++03における乱数生成は、Cのrand関数を利用したstd::rand()を�
 乱数を使ったシミュレーションを行う場合、値の範囲や値の発生率を表す確率分布を考える必要が有る。例えば、サイコロの出る目を扱う場合は1から6の範囲で一様分布。テストの平均点が60点である場合の生徒が取るであろう点数を扱う場合は0から100の範囲で正規分布を用いる。
 
 C++11では上記で説明した乱数に関する機能が提供されている。
-擬似乱数(random number engine)、非決定的乱数(uniform random number generator)、確率分布(distribution)について以下で説明する。
+擬似乱数(random number engine)、非決定的乱数(random_device)、確率分布(distribution)について以下で説明する。
 これら機能は、ヘッダファイル *random* をインクルードする事で使用可能となる。
 
 ##### 擬似乱数
 擬似乱数とは、数学的なアルゴリズムにより生成される乱数であり、乱数生成時のパラメータから次に生成される乱数が決定的であるような乱数である。
 シード値を設定する事で、生成される乱数列を変更する事が可能である。
+以下に擬似乱数生成器の一覧、および簡単化のために用意されているtypedefを紹介する。
 
-擬似乱数の生成アルゴリズムは複数あり、ここではメルセンヌ・ツイスタ法の例を紹介する。メルセンヌ・ツイスタ法はパラメータが多く使用が難しい。
+| アルゴリズム | テンプレートクラス名|
+| -- | -- |
+| 線形合同法 | linear_congruential_engine |
+| メルセンヌ・ツイスタ法 | mersenne_twister_engine |
+| キャリー付き減算法 | subtract_with_carry_engine |
+
+| typedef | クラス |
+| -- | -- |
+| minstd_rand0 | linear_congruential_engine |
+| minstd_rand | linear_congruential_engine |
+| mt19937 | mersenne_twister_engine |
+| mt19937_64 | mersenne_twister_engine |
+| ranlux24_base | subtract_with_carry_engine |
+| ranlux24 | discard_block_engine<ranlux24_base, 223, 23> |
+| ranlux48_base | subtract_with_carry_engine |
+| ranlux48 | discard_block_engine<ranlux48_base, 389, 11> |
+| knuth_b | shuffle_order_engine<minstd_rand0, 256> |
+※ "std::"は省略
+
+
+擬似乱数の生成アルゴリズムは複数あるため、ここではメルセンヌ・ツイスタ法の例を紹介する。メルセンヌ・ツイスタ法はパラメータが多く使用が難しい。
 そのため、周期2^19937-1であるメルセンヌ・ツイスタ(MT19937)が定義されており、例ではこれを使用する。
 なお、メルセンヌ・ツイスタは生成される乱数の周期がとてつもなく長いが、624回の生成値を取得する事で以降の生成値を予測可能になることが知られている。そのため、ハッシュ化関数を通さない限り暗号化に使用してはならない。
 
@@ -64,6 +85,35 @@ int main() {
 確率分布とは、ある特定の値の範囲において、各値がどれくらいの確率で発生するかを与えるものである。
 C++11には、様々な種類の確率分布が定義されている。例えば離散型で、一様分布を生成する uniform_int_distribution, TrueかFalseの2値のみを扱うbernoulli_distribution。
 連続型では、一様分布を生成する uniform_real_distribution, 正規分布を生成する normal_distrobutionなどがある。
+以下に、確率分布一覧を示す。
+
+| 種別 | 名前 | 分布型 | テンプレートクラス名 |
+| :---: | --- | :---: | --- |
+| 一様分布 | - | - |
+| - | 離散一様分布 | 離散型 | uniform_int_distribution |
+| - | 連続一様分布 | 連続型 | uniform_double_distribution |
+| ベルヌーイ分布 | - | - | - |
+| - | ベルヌーイ分布 | 離散型 | bernoulli_distribution |
+| - | 二項分布 | 離散分布 | binomial_distribution |
+| - | 負の二項分布 | 離散分布 | negative_binomial |
+| - | 幾何分布 | 離散分布 | geometric_distribution |
+| ポアソン分布 | - | - | - |
+| - | ポアソン分布 | 離散型 | poisson_distribution |
+| - | 指数分布 | 連続型 | exponential_distribution |
+| - | ガンマ分布 | 連続型 | gamma_distribution |
+| - | ワイブル分布 | 連続型 | weibull_distribution |
+| - | 極値分布 | 連続型 | extreme_value_distribution |
+| 正規分布 | - | - | - |
+| - | 正規分布 | 連続型 | normal_distrobution |
+| - | 対数正規分布 | 連続型 | lognormal_distribution |
+| - | カイ二乗分布 | 連続型 | chi_squarea_distribution |
+| - | コーシー分布 | 連続型 | cauchy_distribution |
+| - | F分布 | 連続型 | fisher_f_distribution |
+| - | T分布 | 連続型 | student_t_distribution |
+| サンプリング分布 | - | - | - |
+| - | 離散分布 | 離散型 | discreate_distribution |
+| - | 区分定数分布 | 連続型 | piecewise_constant_distribution |
+| - | 区分線形分布 | 連続型 | piecewise_linear_distribution|
 
 基本的に離散型は整数型(デフォルトはint)を用いて、連続型は浮動小数点型(デフォルトはdouble)を戻り値として使用する。また、確率分布の適用方法は、使用したい分布に対して使用する乱数生成器を渡すだけである。
 

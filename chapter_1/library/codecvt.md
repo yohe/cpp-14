@@ -1,4 +1,4 @@
-### *codecvt*
+### *文字コード変換(codecvt)*
 ----
 #### 概要
 C++11の文字列リテラルの追加により、標準規格の中で様々な文字列のコーディング方式(UTF-8, UTF-16, UTF-32, UCS2, UCS4)が扱えるようになっており、
@@ -50,14 +50,14 @@ enum codecvt_mode {
 
 int main() {
     const char* utf8 = u8"あいうえお";
-    std::cout << std::hex;
+    std::cout << std::hex << "UTF-8   : ";
     for (auto c : std::string(utf8)) {
         unsigned char v = c;
         std::cout << (int)v << ",";
     }
     std::cout << std::endl;
     const char16_t* utf16 = u"あいうえお";
-    std::cout << std::dec;
+    std::cout << std::dec << "UCS-2   : ";
     for (auto c : std::u16string(utf16)) {
         std::cout << c << ",";
     }
@@ -65,10 +65,12 @@ int main() {
 
     std::wstring_convert<std::codecvt_utf8<char16_t, 0x10ffff, (std::codecvt_mode)1>, char16_t> ws_cvt;
     std::u16string str = ws_cvt.from_bytes(std::string(utf8));
+    std::cout << std::dec << "Convert : ";
     for(auto& c : str) {
         unsigned int v = c;
         std::cout << v << ",";
     }
+    std::cout << std::endl;
     return 0;
 }
 ```
@@ -82,6 +84,8 @@ Convert : 12354,12356,12358,12360,12362,
 
 ##### codecvt_utf16
 マルチバイトシーケンスであるUTF-16と固定幅であるUCS2 or UCS4間の変換を提供する。
+なお、固定幅からマルチバイトシーケンスの生成結果は、すべてstd::stringで返却される。そのため、バイナリファイルへの書き込みのみがサポートされる。
+テキストファイルへの書き込みを行った場合の動作は未定義である。
 
 以下に **codecvt_utf16** の定義について示す。
 
@@ -111,9 +115,9 @@ int main() {
         std::cout << (int)v << ",";
     }
     std::cout << std::endl;
-    const char16_t* ucs2 = u"\U00010384";
-    std::cout << std::hex << "UCS-2   : ";
-    for (auto c : std::u16string(ucs2)) {
+    const char16_t* utf16 = u"\U00010384";
+    std::cout << std::hex << "UTF-16  : ";
+    for (auto c : std::u16string(utf16)) {
         std::cout << c << ",";
     }
     std::cout << std::endl;
@@ -142,7 +146,7 @@ int main() {
 
 ```
 UCS-4   : 10384,
-UCS-2   : d800,df84,
+UTF-16  : d800,df84,
 Convert : d800,df84,
 ```
 
@@ -168,17 +172,24 @@ class codecvt_utf8_utf16 : public codecvt<Elem, char, mbstate_t> {
 #include <codecvt>
 
 int main() {
-    std::cout << std::endl;
-    const char16_t* ucs2 = u"\U00010384";
-    std::cout << std::hex << "UCS-2   : ";
-    for (auto c : std::u16string(ucs2)) {
+    const char16_t* utf16 = u"\U00010384";
+    std::cout << std::hex << "UTF-16  : ";
+    for (auto c : std::u16string(utf16)) {
         std::cout << c << ",";
     }
     std::cout << std::endl;
 
-    // ucs2 -> UTF-8
+    const char* utf8 = u8"\U00010384";
+    std::cout << std::hex << "UTF-8   : ";
+    for (auto c : std::string(utf8)) {
+        unsigned char v = c;
+        std::cout << (int)v << ",";
+    }
+    std::cout << std::endl;
+
+    // utf-16 -> UTF-8
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t, 0x10ffff, (std::codecvt_mode)1>, char16_t> ws_cvt;
-    std::string str = ws_cvt.to_bytes(ucs2);
+    std::string str = ws_cvt.to_bytes(utf16);
     std::cout << std::hex << "Convert : ";
     for(auto& c : str) {
         unsigned int v = c;
@@ -190,7 +201,7 @@ int main() {
 
 出力例を以下に示す。
 ```
-
-UCS-2   : d800,df84,
+UTF-16  : d800,df84,
+UTF-8   : f0,90,8e,84,
 Convert : f0,90,8e,84,
 ```
