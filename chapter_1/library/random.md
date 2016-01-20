@@ -1,4 +1,4 @@
-### *random*
+### *乱数(random)*
 ---
 #### 概要
 C++03における乱数生成は、Cのrand関数を利用したstd::rand()を提供していた。
@@ -26,15 +26,15 @@ C++11では上記で説明した乱数に関する機能が提供されている
 | メルセンヌ・ツイスタ法 | mersenne_twister_engine |
 | キャリー付き減算法 | subtract_with_carry_engine |
 
-| typedef | クラス |
+| typedef | 概要 |
 | -- | -- |
-| minstd_rand0 | linear_congruential_engine |
-| minstd_rand | linear_congruential_engine |
-| mt19937 | mersenne_twister_engine |
-| mt19937_64 | mersenne_twister_engine |
-| ranlux24_base | subtract_with_carry_engine |
+| minstd_rand0 | 線形合同法における A=16807, B=0, M=2^31-1 |
+| minstd_rand | 線形合同法における A=48271, B=0, M=2^31-1 |
+| mt19937 | メルセンヌ・ツイスタにおける周期が2^19937-1となる生成法 |
+| mt19937_64 | 上記の64bit版 |
+| ranlux24_base | キャリー付き減算法における S=10, R=24, M=2^24 |
 | ranlux24 | discard_block_engine<ranlux24_base, 223, 23> |
-| ranlux48_base | subtract_with_carry_engine |
+| ranlux48_base | キャリー付き減算法における S=5, R=12, M=2^48 |
 | ranlux48 | discard_block_engine<ranlux48_base, 389, 11> |
 | knuth_b | shuffle_order_engine<minstd_rand0, 256> |
 ※ "std::"は省略
