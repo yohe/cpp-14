@@ -10,14 +10,14 @@ system errorは幾つかのクラスに分かれており、**error_category**�
 ##### error_category
 エラーコードの発生源や特定のエラーカテゴリを識別するためのベースクラスである。
 基本的に既に定義されている一般カテゴリ, システムカテゴリを使用することになる。
-また、ユーザが新たに定義することも可能でありその場合はerror_categoryクラスを継承する必要が有る。
+また、ユーザが新たに定義することも可能でありその場合はerror_categoryクラスを継承させる。
+独自のerror_categoryを定義することで、プログラム毎の独自エラーコードとエラーメッセージの対応を定義することができる。
 一般カテゴリは、POSIXで定義された errno (ヘッダファイルcerrorに定義されているもの)に関連するエラーで使用される。
 システムカテゴリは、OS毎に独立したエラーを示す場合に使用される。
 
 これらのカテゴリはそれぞれ、以下の関数を用いて取得する。error_categoryは、参照でオブジェクトのやり取りする。
 そのため、 これらの関数は常に同じオブジェクトを返却する。(つまり同じアドレスを持つ)
-また、独自のerror_categoryを定義することで、プログラム毎の独自エラーコードとエラーメッセージの対応を定義することも可能であり、
-その場合も同じカテゴリは同じアドレスを持つように定義すべきである。
+独自のerror_categoryを定義した場合でも、同じカテゴリは同じアドレスを持つように定義すべきである。
 
  * const error_category& generic_category() noexcept;
  * const error_category& system_category() noexcept;
@@ -25,6 +25,11 @@ system errorは幾つかのクラスに分かれており、**error_category**�
 以下に、独自のerror_categoryを定義する場合の例を示す。
 
 ```c++
+#include <system_error>
+#include <map>
+#include <string>
+#include <iostrem>
+
 enum class my_error {
     no_error = 0,
     error = 1,
