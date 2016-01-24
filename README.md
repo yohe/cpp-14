@@ -11,7 +11,5 @@
 また、C++11は初級者向けにより理解しやすく、また記述を簡単にする機能が多く取り入れられている。
 そのためC++に興味があるが、C++をよく知らないという人にも参考になると思っている。
 
-## コントリビュート
-
 ## ライセンス
-
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><a xmlns:cc="http://creativecommons.org/ns#" href="https://www.gitbook.com/book/yohe/cpp-14/details" property="cc:attributionName" rel="cc:attributionURL">Yohei.sekiguchi</a> 作『<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">C++11 and C++14 additional features.</span>』は<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際 ライセンス</a>で提供されています。
