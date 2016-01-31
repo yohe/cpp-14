@@ -44,10 +44,6 @@ auto func() -> double {
 }
 ```
 
-さて、autoによる変数宣言を行うと(特に初期化式に関数呼び出しが含まれる場合)、変数の型が人間には判断しづらくなるというデメリットがある。
-だが、最近の開発環境では関数宣言へのジャンプ機能などがあるため大きな問題になることは少ないと思われる。それよりも、autoによる型のロバスト性獲得であったり、
-コンパイラによる最適な型の選択によるメリットの方が大きい場合もあると考える。
-
 autoで宣言された変数と同じ型の変数を再度作成したいと言った場合もある。この場合、decltype指定子というものを使用する。
 decltype指定子とは、decltype(式)という記述で型を表すことができ、ここで表される型はdecltypeに指定した式の型である。
 また、decltypeで指定した式は評価されない(ランタイム中に実行されない)。
@@ -61,5 +57,106 @@ decltype(i++) j;    //j is int
 decltype(f()) d;    //d is double
 
 std::cout << i << std::endl; // 0
+```
+
+
+さて、autoによる変数宣言を行うと(特に初期化式に関数呼び出しが含まれる場合)、変数の型が人間には判断しづらくなるというデメリットがある。
+だが、最近の開発環境では関数宣言へのジャンプ機能などがあるため大きな問題になることは少ないと思われる。それよりも、autoによる型のロバスト性獲得であったり、 コンパイラによる最適な型の選択によるメリットの方が大きい場合もあると考える。
+
+例えば、以下のようなケースを考える。
+
+```c++
+#include <map>
+#include <string>
+#include <iostream>
+
+std::map<std::string, int> m;
+
+int main() {
+    m.insert(std::make_pair(std::string("abc"), 1);
+
+    for (const std::pair<std::string, int>& p : m) {
+        std::cout << p.first << std::endl;
+    }
+}
+```
+上記のコードには意図しない動作が含まれている。for文の要素を参照で受け取っているが、
+実は型が異なることによってコピーが発生するため、参照として受け取れていない。
+実際の型は、std::pair<const std::string, int> である。
+以下のコードを実行することで確認可能だ。
+
+```c++
+#include <map>
+#include <iostream>
+
+class X {
+public:
+    X(int i) : i_(i) {}
+    X() = default;
+    ~X() = default;
+
+
+    X(const X& x) {
+        std::cout << "copy construct" << std::endl;
+    }
+    X& operator=(const X& x) = default;
+
+    X(X&& x) = default;
+    X& operator=(X&& x) = default;
+
+    int i_;
+};
+
+bool operator<(const X& r, const X& l) {
+    return r.i_ < l.i_;
+}
+
+std::map<X, int> m;
+
+int main() {
+    m.insert(std::make_pair(X(1), 1));
+    m.insert(std::make_pair(X(2), 2));
+
+    std::cout << "----------------------" << std::endl;
+    for( const std::pair<X, int>& p : m) {
+        std::cout << p.second << std::endl;
+    }
+
+    std::cout << "----------------------" << std::endl;
+    for( const std::pair<const X, int>& p : m) {
+        std::cout << p.second << std::endl;
+    }
+    return 0;
+}
+```
+
+```
+----------------------
+copy construct
+1
+copy construct
+2
+----------------------
+1
+2
+```
+
+上記のような間違いは起こりやすい。このような間違いは、autoを使用することで無くすことができる。
+autoを使用しすぎると保守性が低下する恐れがあるが、上記のような型が自明な箇所では積極的に使用していくのが良いだろう。
+
+```c++
+#include <map>
+#include <string>
+#include <iostream>
+
+std::map<std::string, int> m;
+
+int main() {
+    m.insert(std::make_pair(std::string("abc"), 1);
+
+    for (const auto& p : m) {
+        std::cout << p.first << std::endl;
+    }
+}
 ```
 
