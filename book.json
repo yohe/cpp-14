@@ -3,7 +3,7 @@
     "plugins": ["autocover"],
     "pluginsConfig": {
         "autocover": {
-            "title": "C++11 & C++14 additional features handbook",
+            "title": "C++11 and C++14 additional features handbook",
             "author": "Yohei.Sekiguchi",
             "font": {
                 "size": 48,
