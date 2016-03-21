@@ -6,24 +6,25 @@ atomic型を適切に使用するには、メモリモデル、およびフェ�
 
 ##### メモリモデル
 メモリモデルを説明するのは非常に難しいため、メモリモデルの一部のみを扱う。そして、メモリバリアとその必要性について説明し、atomicでの表現方法を示すことにする。
-本書で記述するメモリモデルとは、メモリ一貫性モデルを指す。一般的な内容は、[consistency model](https://en.wikipedia.org/wiki/Consistency_model)を参照してほしい。
+本書で記述するメモリモデルとは、メモリ一貫性モデルを指す。メモリ一貫性モデルの一般的な内容は、[consistency model](https://en.wikipedia.org/wiki/Consistency_model)を参照してほしい。
 
 メモリ一貫性モデルとは、マルチスレッドで動作するプログラム上の変数に対するアクセス(読み/書き)がどのような順序で実行されるかのルールを定義したものである。
 メモリ一貫性モデルにおいて一番基本的なモデルが逐次一貫性モデルである。
 
 > 逐次一貫性モデルとは、どのような実行結果も、すべてのプロセッサがある順序で逐次的に実行した結果と等しく、
 > かつ、個々のプロセッサの処理順序がプログラムで指定された通りであること
+>
 > Wikipedia引用
 
 上記の内容は当たり前のように感じられるかもしれないが、これを満たさないメモリ一貫性モデルも存在する。
-例えば、Total Store Ordering model(TSO), Relaxed consistency model(XC)などがある。これらはメモリアクセス命令をプログラム順とは異なる順で発行すること許容したメモリモデルである。分かりやすい例を挙げるならば、あるメモリの読み込み命令を実行する際に、そのメモリのデータがキャッシュ上にない、もしくは古いデータの場合にはメモリから読み込むまで待ち時間が発生する。この時に、高速化のために後続するメモリアクセス命令を実行する時である。
+例えば、Total Store Order(TSO), Relaxed consistency model(XC)などがある。これらはメモリアクセス命令をプログラム順とは異なる順で発行すること許容したメモリモデルである。分かりやすい例を挙げるならば、あるメモリの読み込み命令を実行する際に、そのメモリのデータがキャッシュ上にない、もしくは古いデータの場合にはメモリから読み込むまで待ち時間が発生する。この時に、後続する関連のないメモリアクセス命令であれば実行することが可能であるため、実行順を入れ替えることで高速化させることがある。
 
-このようなプログラム順とメモリアクセス順がことなる順で実行されることをアウトオブオーダ実行と呼ぶ。
+このようなプログラム順とメモリアクセス順がことなる順で実行されることをアウトオブオーダ実行と呼ぶ。なお、プログラム順のことをプログラムオーダと呼び、メモリアクセス順をメモリオーダと呼ぶ。
 ※ このアウトオブオーダはプログラムの最適化によっても引き起こされる可能性がある。
 
 
-アウトオブオーダ実行について考えてみる。例えば、以下のコードを実行した場合、v1, v2がどのような値を持つか考える。
-なお、データ競合は発生しないものとする。
+アウトオブオーダ実行について考えてみる。例えば、以下のコードを実行した場合、v1がどのような値を持つか考える。
+なお、データ競合(data race)は発生しないものとする。
 
 ```c++
 #include <thread>
@@ -31,10 +32,8 @@ atomic型を適切に使用するには、メモリモデル、およびフェ�
 
 int A = 0;
 int B = 0;
-int C = 0;
 
 int v1 = 0;
-int v2 = 0;
 
 void thread1() {
     A = 1;
@@ -42,60 +41,27 @@ void thread1() {
 }
 
 void thread2() {
-    A = 2;
-    C = 1;
-}
-
-void thread3() {
-    while(B != 1) {}
-    while(C != 1) {}
+    while( B != 1 );
     v1 = A;
 }
 
-void thread4() {
-    while(B != 1) {}
-    while(C != 1) {}
-    v2 = A;
-}
 
 int main() {
     std::thread t1(thread1);
     std::thread t2(thread2);
-    std::thread t3(thread3);
-    std::thread t4(thread4);
-
-    std::cout << "v1 : " << v1 << std::endl;
-    std::cout << "v2 : " << v2 << std::endl;
 
     t1.join();
     t2.join();
-    t3.join();
-    t4.join();
+    std::cout << "v1 : " << v1 << std::endl;
+
     return 0;
 }
 ```
 
-このプログラムをマルチコア環境で実行した時、v1, v2の値が異なる値を保持する場合がある。これは、あるCPU-Aで実行された書き込み処理が、CPU-Bに反映されるタイミングがプログラム順と異なる順で行われることにより発生するためである。つまりアウトオブオーダ実行が発生する場合である。
-アウトオブオーダーはプログラムの最終的な動作に影響がないように行われるが、これは実行している実行スレッドに対してのみ考慮される。従って、複数スレッドで動作するプログラムの場合、アウトオブオーダは予期しない動作を引き起こす可能性がある。
+このプログラムをマルチコア環境で実行した時、v1 == 0 となる可能性がある。これは、あるCPU-Aで実行された書き込み処理が、CPU-Bに反映されるタイミングがプログラム順と異なる順で行われることにより発生するためである。つまりアウトオブオーダが発生することで引き起こされる。
+アウトオブオーダーはプログラムの最終的な動作に影響がないように行われるが、これは実行スレッド自身に対してのみ考慮される。
+従って、複数スレッドで動作するプログラムの場合、アウトオブオーダは予期しない動作を引き起こす可能性がある。
 
-以下に、筆者の環境で複数回実行した際のパターンを示しておく。
-```
--- パターン1
-v1 : 0
-v2 : 0
--- パターン2
-v1 : 2
-v2 : 2
--- パターン3
-v1 : 1
-v2 : 1
--- パターン4
-v1 : 0
-v2 : 1
--- パターン5
-v1 : 0
-v2 : 2
-```
 
 さて、このように逐次一貫性をハードウェアレベルで保証できないケースがある。そのため、ハードウェア側で順序性を保証する機能を提供している。それがフェンス(メモリバリア)である。C++におけるatomic操作はatomicな変数アクセスに加え、このフェンス機能を提供する。
 
@@ -120,13 +86,14 @@ Release fenceとは、フェンスの前の任意のメモリ操作が必ずフ�
 
 | メモリオーダ | 動作 |
 | -- | -- |
-| std::memory_order_relaxed | メモリオーダに対して何も作用しない。atomicな操作のみを提供 |
+| std::memory_order_relaxed | メモリオーダに対して何も作用しない。アトミックな操作のみを提供 |
 | std::memory_order_release | Release fenceを実現する |  
 | std::memory_order_acquire | Acquire fenceを実現する |  
 | std::memory_order_acq_rel | Relase fence、Acquire fenceの両方を実現する |  
 | std::memory_order_consume | Acquire fence(読み込んだ変数に依存する操作に対してのみ保証) |
 | std::memory_order_seq_cst | 逐次一貫性を実現する |
 
+std::memory_order_seq_cstは、逐次一貫性を実現することができる。 逐次一貫性を実現するということは、これが適用された時点でメモリ操作が全てのスレッドからプログラム順と同じ順で観測できることを示す。
 atomicライブラリを理解するための基礎を記述できた。ここからatomicライブラリの説明に入る。
 
 ##### atomicライブラリ
@@ -136,5 +103,76 @@ atomic型は、load(読み込み), store(書き込み)などの操作を提供�
 なお、atomic型に定義されている全てのオペレーションはフリー関数としても提供されている。例えば、atomic<T>.load()については、atomic_load()関数というように定義されている。
 また、純粋にfence機能のみを提供する、atomic_thread_fnce関数もある。
 
-2つのatomic型変数(A,B)が、Release fence(A)、Acquire fence(B)を提供する場合で、かつA -> Bの順序関係がある場合、この関係を "Synchronized with"関係と呼ぶ。
+2つのatomic操作(A,B)が、Release fence(A)、Acquire fence(B)を提供する場合で、Aの後に書き込んだ値をBで読み込めることを確認することでAまで実行されたことを保証できる。
+よって、A -> B の関係が生まれる。
+この関係を "Synchronizes with"関係と呼び、同期しているという。また、"Synchronizes with"である時、これを "happens before"関係とも呼ぶことができる。"A happens before B"というとき、Aは、Bが開始する前に完了していることを示す。
 
+以下に、フェンスを使用した場合における"synchronizes with"を表現したサンプルを示す。
+
+```c++
+#include <atomic>
+#include <iostream>
+
+int A = 0;
+int v1 = 0;
+std::atomic<int> a(0);
+
+void thread1() {
+    A = 1;                                                  // a1
+    std::atomic_thread_fence(std::memory_order_release);    // a2
+    a.store(1, std::memory_order_relaxed);                  // a3
+}
+
+void thread2() {
+    while( a.load(std::memory_order_relaxed) != 1);         // b1
+
+    std::atomic_thread_fence(std::memory_order_acquire);    // b2
+    v1 = A;                                                 // b3
+}
+
+int main() {
+    std::thread t1(thread1);
+    std::thread t2(thread2);
+
+    t1.join();
+    t2.join();
+    std::cout << "v1 : " << v1 << std::endl;
+
+    return 0;
+}
+```
+上記の動作を考えて見る。まず、Release fenceにより a1 -> a2 であることは保証される。続いて、b1の終了条件はa3を実行していることであるため、a2 -> b2である("a2 synchronizes with b2.")。いて、Acquire fenceにより、b2 -> b3であることは保証される。これらより、a1 -> b3であることが導かれる。
+ここで、a2 -> b2の順序関係がない場合、a1, b3の命令は同時に実行され得る。つまりデータ競合が発生する可能性がある。
+
+フェンスを使用せず、atomic変数でフェンスを扱う場合のサンプルを以下に示す。
+
+```c++
+#include <atomic>
+#include <iostream>
+
+int A = 0;
+int v1 = 0;
+std::atomic<int> a(0);
+
+void thread1() {
+    A = 1;                                                  // a1
+    a.store(1, std::memory_order_release);                  // a2
+}
+
+void thread2() {
+    while( a.load(std::memory_order_acquire) != 1);         // b1
+    v1 = A;                                                 // b2
+}
+
+int main() {
+    std::thread t1(thread1);
+    std::thread t2(thread2);
+
+    t1.join();
+    t2.join();
+    std::cout << "v1 : " << v1 << std::endl;
+
+    return 0;
+}
+```
+上記についてもフェンス版と同様に考えることで、a1 -> b2 の順序関係により、 v1 == 1であることが保証される。
