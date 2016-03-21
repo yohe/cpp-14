@@ -125,7 +125,6 @@ void thread1() {
 
 void thread2() {
     while( a.load(std::memory_order_relaxed) != 1);         // b1
-
     std::atomic_thread_fence(std::memory_order_acquire);    // b2
     v1 = A;                                                 // b3
 }
