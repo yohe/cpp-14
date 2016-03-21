@@ -194,3 +194,7 @@ int main() {
 }
 ```
 上記についてもフェンス版と同様に考えることで、a1 -> b2 の順序関係により、 v1 == 1であることが保証される。
+
+
+##### 参考文献
+ 1. Sorin, Daniel, Mark Hill, and David Wood. A Primer on Memory Consistency and Cache Coherence. Morgan & Claypool Publishers, 2011.
