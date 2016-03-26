@@ -32,7 +32,13 @@ int main(int argc, char** argv) {
 ```
 
 また、キーワード"auto"は、関数の戻り値の型推論にも使用することができる。但しreturn文からの型推論ではなく、
-trailling return typeと呼ばれる後置形の型指定の式の型推論から決定する。
+Trailing-return-typeと呼ばれる後置形の型指定の式の型推論から決定する。
+
+Trailing-return-type指定を使用する場合は、以下のような構文となる。
+
+`auto 関数名(引数リスト) -> 式 { body }`
+
+Trailing-return-typeが追加された経緯として、以前は戻り値の型を導出するために、引数リストの変数を参照することが出来なかった。
 
 ```c++
 auto func() -> int {
@@ -45,7 +51,7 @@ auto func() -> double {
 ```
 
 autoで宣言された変数と同じ型の変数を再度作成したいと言った場合もある。この場合、decltype指定子というものを使用する。
-decltype指定子とは、decltype(式)という記述で型を表すことができ、ここで表される型はdecltypeに指定した式の型である。
+decltype指定子とは、decltype(式)という記述で**型**を表すことができ、ここで表される型はdecltypeに指定した式の型である。
 また、decltypeで指定した式は評価されない(ランタイム中に実行されない)。
 
 
@@ -59,6 +65,21 @@ decltype(f()) d;    //d is double
 std::cout << i << std::endl; // 0
 ```
 
+前述のTrailing-return-typeは、このdecltypeを用いることで真価を発揮する。以下に幾つかの例を示す。
+Trailing-return-type版と、通常版をそれぞれ記載する。
+
+```
+template <class T, class U>
+decltype((*(T*)0) + (*(U*)0)) add(T t, U, u) { return t + u; }
+
+template <class T, class U>
+auto add(T t, U, u) -> decltype(t + u) { return t + u; }
+
+
+int (*(*bar())())() { return 0; }     // intを戻り値とする関数ポインタを戻り値とする関数ポインタを返却する関数bar
+
+auto bar() -> auto (*)() -> int (*)() { return 0; }
+```
 
 さて、autoによる変数宣言を行うと(特に初期化式に関数呼び出しが含まれる場合)、変数の型が人間には判断しづらくなるというデメリットがある。
 だが、最近の開発環境では関数宣言へのジャンプ機能などがあるため大きな問題になることは少ないと思われる。それよりも、autoによる型のロバスト性獲得であったり、 コンパイラによる最適な型の選択によるメリットの方が大きい場合もあると考える。
