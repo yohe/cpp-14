@@ -44,7 +44,7 @@ forward_listは、size()関数が提供されないことを除き、全ての�
 | operator<= | |
 
 
-このコンテナは、ヘッダファイル **forward_list**
+本節で解説する機能を使用するには、ヘッダファイル **forward_list**をインクルードする。
 
 ```c++
 #include <forward_list>
