@@ -21,10 +21,10 @@ constexpr struct pixel {                //error 型宣言には指定できな�
     constexpr pixel(int);               //OK    関数宣言(コンストラクタ)
 
 constexpr pixel::pixel(int a)
-    : x(square(a)), y(square(a))        //OK    変数定義
+    : x(square(a)), y(square(a))        //OK    関数定義
 {}
 
-constexpr int square(int x) {           //OK    定義
+constexpr int square(int x) {           //OK    関数定義
     return x*x;
 }
 
