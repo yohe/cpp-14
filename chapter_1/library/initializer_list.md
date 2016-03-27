@@ -18,7 +18,8 @@ std::vector<int> v {1, 2, 3, 4, 5}
 
 initializer-list constructor を持つ場合、`{初期化リスト}`による初期化を使用すると他のコンストラクタより、initializer-list constructor が優先される。
 ただし、initializer_list の要素が空である場合、デフォルトコンストラクタ呼び出しとして判断される。
-`std::initializer_list<E>`を使用する場合、ヘッダファイル **initializer_list** を include する。
+
+本節で解説する機能を使用するには、ヘッダファイル **initializer_list**をインクルードする。
 
 
 ```c++

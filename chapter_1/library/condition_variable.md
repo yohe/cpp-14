@@ -10,7 +10,7 @@ condition_variableには、一般的なwait/notify機能が提供されている
 対象のcondition_variableでwaitしている全てのスレッドを起こすnotify_all()が提供されている。
 なお、wait状態のスレッドが存在しない時にnotifyを行う場合、notifyは無視される。そのため、wait前のnotifyが発生した場合、waitによるデッドロックを注意する必要がある。
 
-本機能を使用する場合、ヘッダファイル**condition_variable**をインクルードすれば良い。
+本機能を使用する場合、ヘッダファイル**condition_variable**をインクルードする。
 
 以下に使用例を記載する。
 
