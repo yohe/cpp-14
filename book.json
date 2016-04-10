@@ -1,22 +1,5 @@
 {
-    {
-    "plugins": ["autocover"],
-    "pluginsConfig": {
-        "autocover": {
-            "title": "C++11 and C++14 additional features handbook",
-            "author": "Yohei.Sekiguchi",
-            "font": {
-                "size": 48,
-                "family": "Impact",
-                "color": "#FFF"
-            },
-            "size": {
-                "w": 1800,
-                "h": 2360
-            },
-            "background": {
-                "color": "#09F"
-            }
-        }
-    }
+    "gitbook": "2.x.x",
+    "plugins": [],
+    "pluginsConfig": {}
 }
