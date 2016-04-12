@@ -22,7 +22,7 @@ public:
 };
 
 int main() {
-    std::array<int, 5> arr {1, 2};          // 足りない要素は型の初期値が使用される
+    std::array<int, 5> arr = {1, 2};        // 足りない要素は型の初期値が使用される
 
     int sum = 0;
     for(auto& v : arr) {
@@ -35,7 +35,6 @@ int main() {
         std::cout << arr[i] << ",";         // 添字アクセスも可能
     }
 
-    std::array<X, 8> xarr {1, 2, 3, 4};     // ユーザ定義型も使用可能
+    std::array<X, 8> xarr = {1, 2, 3, 4};   // ユーザ定義型も使用可能
 }
 ```
-
