@@ -46,5 +46,8 @@
        * [future](chapter_1/library/future.md)
 * [C++14](chapter_2/README.md)
    * [言語機能](chapter_2/core_features.md)
+       * [二進数リテラル](chapter_2/core/binary_literal.md)
+       * [decltype(auto)](chapter_2/core/decltype_auto.md)
+       * [通常関数の戻り値型推論](chapter_2/core/return_type_deduction.md)
    * [ライブラリ](chapter_2/library_features.md)
 
