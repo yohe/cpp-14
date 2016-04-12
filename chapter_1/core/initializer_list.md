@@ -31,17 +31,18 @@ private:
     double b;
 };
 
-hoge h1 = {1, 1.3};     //OK コンストラクタ呼び出し, C++03では集約型のみ使用可
+hoge h1 = {1, 1.3};     //OK コンストラクタ呼び出し
 hoge h2{1, 1.3};        //OK コンストラクタ呼び出し
 hoge h3{1.0, 1.3};      //error double -> int への変換は不可
 hoge h4(1.0, 1.3);      //OK
 
-struct Y {
+struct Y {              //集約型
     int a;
     int b;
 };
 
-Y y = {1, 2};                           //OK 型Yを初期化リストで初期化
+Y y0 {1, 2};                            //OK 型Yを初期化リストで初期化
+Y y1 = {1, 2};                          //OK 型Yを初期化リストで初期化
 Y y2[3] = { {1,2}, {3, 4}, {5, 6} };    //OK 型Yの配列を初期化リストで初期化
 ```
 
@@ -62,6 +63,37 @@ int d[3] = {1, 2, 3, 4};    //error
 
 int e[] = {1, 2, 3};        //OK 配列のサイズは3
 ```
+
+また、面白いことにクラス型の構築において、代入構文のような記述がコンストラクタ呼び出しとなる点である。
+但し、初期化リストの前に型名を記述する場合には、コピーコンストラクタも動作する。
+※ 型名を記述した場合であっても、基本的にコンパイラの最適化によってコンストラクタのみとなる。
+
+```c++
+class X {
+public:
+    X(int a, double b) : a{a}, b{b} {
+        std::cout << "constructor" << std::endl;
+    }
+    X(const X& rhs) {
+        std::cout << "copy constructor" << std::endl;
+    }
+private:
+    int a;
+    double b;
+}
+
+int main() {
+    X x = { 1, 1.0 };
+    X x = X{ 1, 1.0 };
+    return 0;
+}
+```
+constructor
+constructor
+copy constructor
+```
+```
+
 
 初期化リストの特殊系として、`std::initializer_list<T>`を使用する方式がある。
 これについては、ライブラリの項目を参照。

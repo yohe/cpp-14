@@ -1,5 +1,11 @@
 {
     "gitbook": "2.x.x",
     "plugins": [],
-    "pluginsConfig": {}
+    "pluginsConfig": {
+        "fontSettings": {
+            "theme": "white",
+            "family": "sans",
+            "size": 2
+        }
+    }
 }
