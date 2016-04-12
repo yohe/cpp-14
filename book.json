@@ -1,5 +1,7 @@
 {
     "gitbook": "2.x.x",
+    "title": "C++11 and C++14 additional features handbook.",
+    "language": "ja",
     "plugins": [],
     "pluginsConfig": {
         "fontSettings": {
@@ -7,5 +9,8 @@
             "family": "sans",
             "size": 2
         }
+    },
+    "styles": {
+        "pdf": "pdf_font.css"
     }
 }
