@@ -64,5 +64,36 @@ int d[3] = {1, 2, 3, 4};    //error
 int e[] = {1, 2, 3};        //OK 配列のサイズは3
 ```
 
+また、面白いことにクラス型の構築において、代入構文のような記述がコンストラクタ呼び出しとなる点である。
+但し、初期化リストの前に型名を記述する場合には、コピーコンストラクタも動作する。
+※ 型名を記述した場合であっても、基本的にコンパイラの最適化によってコンストラクタのみとなる。
+
+```c++
+class X {
+public:
+    X(int a, double b) : a{a}, b{b} {
+        std::cout << "constructor" << std::endl;
+    }
+    X(const X& rhs) {
+        std::cout << "copy constructor" << std::endl;
+    }
+private:
+    int a;
+    double b;
+}
+
+int main() {
+    X x = { 1, 1.0 };
+    X x = X{ 1, 1.0 };
+    return 0;
+}
+```
+constructor
+constructor
+copy constructor
+```
+```
+
+
 初期化リストの特殊系として、`std::initializer_list<T>`を使用する方式がある。
 これについては、ライブラリの項目を参照。
