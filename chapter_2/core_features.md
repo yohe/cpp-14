@@ -15,7 +15,7 @@ C++14では、C++11で追加されたconstexprや、型推論関連の機能は�
  * [サイズ指定delete]()
  * [非推奨属性]()
  * [数値区切り]()
- * [Contextually implicitly conversion](core/context_implicit_conv.md)
+ * [文脈依存の型変換の制約緩和](core/context_implicit_conv.md)
 
 上記の各項目に関する説明は、それぞれの項目内を参照。
 
