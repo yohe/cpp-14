@@ -6,15 +6,16 @@ C++14では、C++11で追加されたconstexprや、型推論関連の機能は�
 テンプレート変数や、数値区切りなどのC++11にはなかった新機能なども含まれるが、主にC++11で追加された機能に対する機能補完が主な追加となっている。
 
  * [2進数リテラル](core/binary_literal.md)
+ * [decltype(auto)](core/decltype_auto.md)
  * [通常関数の戻り値型推論]()
  * [一般化ラムダキャプチャ]()
  * [汎用ラムダ式]()
  * [テンプレート変数]()
  * [constexpr制限緩和]()
  * [初期化リスト拡張]()
- * [サイズ指定delete]()
- * [非推奨属性]()
- * [数値区切り]()
+ * [サイズ指定delete](core/sized_deallocation.md)
+ * [非推奨属性](core/deprecated_attr.md)
+ * [数値区切り](core/integer_literal_separator.md)
  * [文脈依存の型変換の制約緩和](core/context_implicit_conv.md)
 
 上記の各項目に関する説明は、それぞれの項目内を参照。
