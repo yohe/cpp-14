@@ -90,7 +90,6 @@ int main() {
 }
 ```
 
-
 前述のTrailing-return-typeは、このdecltypeを用いることで真価を発揮する。以下に幾つかの例を示す。
 Trailing-return-type版と、通常版をそれぞれ記載する。
 
