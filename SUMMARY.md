@@ -52,7 +52,7 @@
        * [ラムダ式拡張]()
        * [テンプレート変数]()
        * [constexpr制限緩和]()
-       * [初期化リスト拡張]()
+       * [メンバ初期化拡張](chapter_2/core/aggr_member_initializer.md)
        * [サイズ指定delete](chapter_2/core/sized_deallocation.md)
        * [非推奨属性](chapter_2/core/deprecated_attr.md)
        * [数値区切り](chapter_2/core/integer_literal_separator.md)
