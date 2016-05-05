@@ -10,7 +10,7 @@ C++14では、C++11で追加されたconstexprや、型推論関連の機能は�
  * [通常関数の戻り値型推論](core/return_type_deduction.md)
  * [一般化ラムダキャプチャ]()
  * [汎用ラムダ式]()
- * [テンプレート変数]()
+ * [変数テンプレート]()
  * [constexpr制限緩和]()
  * [メンバ初期化拡張](core/aggr_member_initializer.md)
  * [サイズ指定delete](core/sized_deallocation.md)
