@@ -49,7 +49,7 @@
        * [2進数リテラル](chapter_2/core/binary_literal.md)
        * [decltype(auto)](chapter_2/core/decltype_auto.md)
        * [通常関数の戻り値型推論](chapter_2/core/return_type_deduction.md)
-       * [ラムダ式拡張]()
+       * [ラムダ式拡張](chapter_2/core/lambda_extension.md)
        * [変数テンプレート](chapter_2/core/variable_template.md)
        * [constexpr制限緩和]()
        * [メンバ初期化拡張](chapter_2/core/aggr_member_initializer.md)

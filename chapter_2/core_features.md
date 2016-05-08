@@ -8,7 +8,7 @@ C++14では、C++11で追加されたconstexprや、型推論関連の機能は�
  * [2進数リテラル](core/binary_literal.md)
  * [decltype(auto)](core/decltype_auto.md)
  * [通常関数の戻り値型推論](core/return_type_deduction.md)
- * [ラムダ式拡張]()
+ * [ラムダ式拡張](core/lambda_extension.md)
  * [変数テンプレート](core/variable_template.md)
  * [constexpr制限緩和]()
  * [メンバ初期化拡張](core/aggr_member_initializer.md)
