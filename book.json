@@ -9,5 +9,8 @@
             "family": "sans",
             "size": 2
         }
+    },
+    "styles": {
+        "pdf": "pdf_font.css"
     }
 }
