@@ -51,7 +51,7 @@
        * [通常関数の戻り値型推論](chapter_2/core/return_type_deduction.md)
        * [ラムダ式拡張](chapter_2/core/lambda_extension.md)
        * [変数テンプレート](chapter_2/core/variable_template.md)
-       * [constexpr制限緩和]()
+       * [constexpr関数の制限緩和]()
        * [メンバ初期化拡張](chapter_2/core/aggr_member_initializer.md)
        * [サイズ指定delete](chapter_2/core/sized_deallocation.md)
        * [非推奨属性](chapter_2/core/deprecated_attr.md)
