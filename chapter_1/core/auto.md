@@ -65,6 +65,31 @@ decltype(f()) d;    //d is double
 std::cout << i << std::endl; // 0
 ```
 
+また、このdecltypeは型の決め方に特殊なルールが設けられている。
+以下にそのルールをまとめる。decltype(e)の式eについて、以下の評価順で型判定が行われる。
+
+ 1. 式e が括弧で囲まれず、名前(変数名, function, etc...)もしくはクラスメンバへのアクセス(x.a or x->a)である場合、指定した名前の型である。但し、名前が存在しない、関数名が複数存在する場合はill-formed
+ 1. 式e が[rvalue参照](chapter_1/core/r_value_ref.md)として判定される場合、T&& (Tは式eの型)
+ 1. 式e が括弧で囲まれた変数名である場合、T& (Tは式eの型)
+ 1. 記のどれにも該当しない場合、式eの型
+
+```c++
+int&& xvalue();
+
+struct X {
+    double a;
+};
+
+int main() {
+    int a;
+    X x;
+    const X* xp = new X();
+    decltype(a)     v1;     //type is int
+    decltype(x.a)   v2;     //type is double
+    decltype(xp->a) v2;     //type is double
+}
+```
+
 前述のTrailing-return-typeは、このdecltypeを用いることで真価を発揮する。以下に幾つかの例を示す。
 Trailing-return-type版と、通常版をそれぞれ記載する。
 
