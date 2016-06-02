@@ -9,7 +9,7 @@ C++14では、これらの制限、制約が緩和されたためconstexpr関数
 ここでは、constexpr関数、及びconstexprコンストラクタの本体に記述できる内容について示す。
 
 ##### constexpr関数
-C++14のconstexpr関数本体には、以下で示すステートメント以外が記述可能である。
+C++14のconstexpr関数本体には、以下で示す構文以外が記述可能である。
  * asm定義 (インラインアセンブラ)
  * goto文
  * tryブロック
@@ -58,9 +58,8 @@ constexpr int g(int x, int n) {     // OK
 ```
 
 ##### constexprコンストラクタ
-constexprコンストラクタの関数本体に対する条件はconstexpr関数と同じである。
-ただし、constexprコンストラクタは、加えて function-try-block を用いてはならない。
-`= delete`されているか、constexpr関数の制約を満たして定義しなければならない。
+constexprコンストラクタの関数本体に記述可能な構文は、constexpr関数と同じである。
+constexprコンストラクタの本体は、`= delete`されているか、constexpr関数本体の制約を満たして定義し、かつ、function-try-block を用いていないことが条件である。
 
 constexprコンストラクタに求められる条件は、C++11の[constexpr](chapter_1/core/constexpr.md)を参照。
 
@@ -81,7 +80,7 @@ private:
 
 class Z {
 public:
-    constexpr Z() try : z_(0) {      //error function-try-block cannot use iin constexpr constructor.
+    constexpr Z() try : z_(0) {      //error function-try-block cannot use in constexpr constructor.
     } catch (...) {
     }
 }
@@ -91,3 +90,4 @@ int main() {
     constexpr Y y;
 }
 ```
+
