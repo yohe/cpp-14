@@ -44,8 +44,45 @@ std::this_threadには他にも便利な関数が定義されている。以下�
 | 定義 | 効果 |
 | -- | -- |
 | get_id() | スレッド識別子を取得 |
-| yield | コンテキストスイッチを発生させる |
-| sleep_until(abs_time) | 指定した日時までスリープ |
-| sleep_for(rel_time)| 指定した時間スリープ |
+| yield | コンテキストスイッチを発生させるヒントを提供する。 実装依存の動作。 |
+| sleep_until(std::chrono::time_point) | 指定した日時までスリープ |
+| sleep_for(std::chrono::duration)| 指定した時間スリープ |
 ※ std::this_thread::は省略
 
+以下に使用例を示す。
+
+```c++
+#include <thread>
+#include <chrono>
+
+std::atomic<bool> flag(false);
+void f() {
+    using namespace std::chrono;
+    std::this_thread::sleep_for(seconds(5));   //OK 5秒間sleep
+
+    while(flag == false) {
+        std::this_thread::yield;
+    }
+
+    std::cout << "f() end." << std::endl;
+}
+
+void g() {
+    system_clock::time_point tp = system_clock::now();
+    tp += minutes(7);
+    std::this_thread::sleep_until(tp);         //OK 1分後までsleep
+
+    flag = true;
+
+    std::cout << "g() end." << std::endl;
+}
+
+int main() {
+    std::thread t1(f);
+    std::thread t2(g);
+
+    t1.join();
+    t2.join();
+    return 0;
+}
+```

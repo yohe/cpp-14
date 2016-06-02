@@ -58,4 +58,11 @@
        * [数値区切り](chapter_2/core/integer_literal_separator.md)
        * [文脈依存の型変換の制約緩和](chapter_2/core/context_implicit_conv.md)
    * [ライブラリ](chapter_2/library_features.md)
-
+       * [functorの利用簡単化](chapter_2/library/simplification_functor.md)
+       * [exchange](chapter_2/library/excange.md)
+       * [コンパイル時整数列](chapter_2/library/compile_time_int_seq.md)
+       * [型によるタプルアクセス](chapter_2/library/access_tuple_by_type.md)
+       * [make_unique](chapter_2/library/make_unique.md)
+       * [Quoted Strings](chapter_2/library/quoted_strings.md)
+       * [ライブラリ定義リテラル](chapter_2/library/user_def_literal.md)
+       * [共有ロック](chapter_2/library/shared_lock.md)

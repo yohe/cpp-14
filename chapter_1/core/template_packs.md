@@ -32,11 +32,9 @@ func(1, 2, 'a', "abc");
 
 ##### 関数パラメータ
 ```c++
-template <class ... Types>
-void impl(Types ... args) {}                //OK パック展開 ("Types"がパターン)
 
 template <class ... T>
-void func(T ... v) {
+void func(T ... v) {                        //OK vは関数パラメータパック
     impl(v...);                             //OK パック展開 ("v"がパターン)
 }
 
