@@ -6,6 +6,7 @@
        * [auto](chapter_1/core/auto.md)
        * [nullptr](chapter_1/core/nullptr.md)
        * [定数式](chapter_1/core/constexpr.md)
+       * [インラインネームスペース](chapter_1/core/inline_namespace.md)
        * [統一初期化構文](chapter_1/core/initializer_list.md)
        * [range-based for ループ](chapter_1/core/range_based_for.md)
        * [ラムダ関数](chapter_1/core/lambda_expression.md)
