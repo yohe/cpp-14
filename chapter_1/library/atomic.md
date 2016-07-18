@@ -24,15 +24,15 @@ atomic型を適切に使用するには、メモリモデル、およびフェ�
 
 
 アウトオブオーダ実行について考えてみる。例えば、以下のコードを実行した場合、v1がどのような値を持つか考える。
-なお、データ競合(data race)は発生しないものとする。
+この例で使用している、`X.store(1, std::memory_order_relaxed)`については後述する。単にデータ競合を回避するために使用していると考えれば良い。
 
 ```c++
 #include <thread>
+#include <atomic>
 #include <iostream>
 
-int A = 0;
-int B = 0;
-int C = 0;
+std::atomic<int> A = 0;
+std::atomic<int> B = 0;
 
 int v1 = 0;
 int v2 = 0;
@@ -40,15 +40,15 @@ int v3 = 0;
 int v4 = 0;
 
 void thread1() {
-    A = 1;          //i1
-    v1 = A;         //i2
-    v2 = B;         //i3
+    A.store(1, std::memory_order_relaxed) = 1;  //i1
+    v1 = A;                                     //i2
+    v2 = B;                                     //i3
 }
 
 void thread2() {
-    B = 1;          //j1
-    v3 = B;         //j2
-    v4 = A;         //j3
+    B.store(1, std::memory_order_relaxed) = 1;  //j1
+    v3 = B;                                     //j2
+    v4 = A;                                     //j3
 }
 
 
@@ -66,7 +66,7 @@ int main() {
             std::cout << "v3 : " << v3 << std::endl;
             std::cout << "v4 : " << v4 << std::endl;
         }
-        A=B=C=0;
+        A=B=0;
         v1=v2=v3=v4=0;
         i++;
     }
@@ -81,9 +81,9 @@ int main() {
 従って、複数スレッドで動作するプログラムの場合、アウトオブオーダは予期しない動作を引き起こす可能性がある。
 
 
-さて、このように逐次一貫性をハードウェアレベルで保証できないケースがある。そのため、ハードウェア側で順序性を保証する機能を提供している。それがフェンス(メモリバリア)である。C++におけるatomic操作はatomicな変数アクセスに加え、このフェンス機能を提供する。
+さて、このように逐次一貫性をハードウェアレベルで保証できないケースがある。そのため、ハードウェア側で順序性を保証する機能を提供している。それがフェンス(メモリバリア)である。C++におけるatomic操作はatomic型の変数アクセスに加え、このフェンス機能を提供する。
 
-C++ではatomic操作を行うにあたり、atomicでない変数のメモリオーダがどのように振る舞うかを指定することができる。
+C++ではatomic操作を行うにあたり、atomic操作におけるメモリオーダがどのように振る舞うかを指定することができる。
 メモリオーダを考えるとき、以下のような分類で考えることができる。
  * Load -> Load
  * Load -> Store
@@ -97,8 +97,8 @@ C++ではatomic操作を行うにあたり、atomicでない変数のメモリ�
 | Acquire fence | Load -> Load, Load -> Store |
 | Release fence | Load -> Store, Store -> Store |
 
-Acquire fenceとは、フェンスの後の任意のメモリ操作が必ずフェンスの後に実行されることを示す。また、Acquire fenceはLoad操作に指定可能である。
-Release fenceとは、フェンスの前の任意のメモリ操作が必ずフェンスの前に実行されることを示す。また、Release fenceはStore操作に指定可能である。
+Acquire fenceとは、フェンスの後の任意のメモリ操作が必ずフェンスの後に実行され、フェンスの前のLoad操作は必ずフェンス前に行われる。Acquire fenceはLoad操作に指定可能である。
+Release fenceとは、フェンスの前の任意のメモリ操作が必ずフェンスの前に実行され、フェンスの後のStore操作は必ずフェンス後に行われる。Release fenceはStore操作に指定可能である。
 
 上記の表を見ると、Store -> Load 操作に対する保証がないことがわかる。つまり、Acquire fence, Release fenceだけでは全てのメモリ操作の組み合わせに対する順序保証を提供できない。
 
@@ -119,12 +119,12 @@ atomicライブラリを理解するための基礎を記述できた。ここ�
 atomic型は、組み込み型をテンプレート引数として受け取る。特殊化済みのtypedefも提供されている。同じであるためここでは、atomic<T>で表現する。
 atomic型は、load(読み込み), store(書き込み)などの操作を提供しており、各操作に対して、メモリオーダを指定できるようになっている。
 つまり、std::memory_order_acquireを指定することで、Acquire fenceを含めて提供することができる。指定しない場合はデフォルト動作として、std::memory_order_seq_cstが指定されたものとして動作する。
-なお、atomic型に定義されている全てのオペレーションはフリー関数としても提供されている。例えば、atomic<T>.load()については、atomic_load()関数というように定義されている。
+なお、atomic型に定義されている全てのオペレーションはフリー関数としても提供されている。例えば、atomic<T>.load(...)については、atomic_load(...)関数というように定義されている。
 また、純粋にfence機能のみを提供する、atomic_thread_fnce関数もある。
 
 本節で解説する機能を使用するには、ヘッダファイル **atomic**をインクルードする。
 
-2つのatomic操作(A,B)が、Release fence(A)、Acquire fence(B)を提供する場合で、Aを先頭としたrelease操作群で書き込まれた値のどれかを読み込むことができた場合、A -> B の関係が生まれる。
+2つのatomic操作(A,B)が、Release fence(A)、Acquire fence(B)を提供する場合で、Aを先頭としたatomicオブジェクトに対するrelease操作群で書き込まれた値のどれかを読み込むことができた場合、A -> B の関係が生まれる。
 この関係を "Synchronizes with"関係と呼び、同期しているという。また、"Synchronizes with"である時、これを "happens before"関係とも呼ぶことができる。"A happens before B"というとき、Aは、Bが開始する前に完了していることを示す。
 
 以下に、フェンスを使用した場合における"synchronizes with"を表現したサンプルを示す。
@@ -164,7 +164,7 @@ int main() {
 ここで、a2 -> b2(a2 synchronizes with b2)の順序関係がない場合、a1, b3の命令は同時に実行され得る。つまりデータ競合が発生する可能性がある。
 このように、フェンスを適切に用いることでロックフリーのプログラムが作成可能となる。しかし、全ての箇所で適切に同期されているプログラムを記述するのは非常に気をつけて記述する必要が有る。そのため、速度を気にしない場合はデフォルト動作である逐次一貫性(std::memory_order_seq_cst)を利用する方が良い。
 
-フェンスを使用せず、atomic変数でフェンスを扱う場合のサンプルを以下に示す。
+`std::atomic_thread_fence`を使用せず、atomic変数の操作でフェンスを扱う場合のサンプルを以下に示す。atomic
 
 ```c++
 #include <atomic>
