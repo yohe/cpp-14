@@ -12,6 +12,7 @@ attribute listに対して、以下のどちらかを用いて指定する。
  * deprecated("警告メッセージ")
 
 この非推奨属性は、以下に示す宣言に対して指定可能である。
+
  | 指定可能な宣言 | 指定例 |
  | -- | -- |
  | クラス | class [[deprecated]] X; |
@@ -19,8 +20,8 @@ attribute listに対して、以下のどちらかを用いて指定する。
  | 変数 | int X [[deprecated]]; |
  | 非staticメンバ変数 | class X { int x [[deprecated]]; }; |
  | 関数/メンバ関数 | [[deprecated]] void func(); |
- | enum | enum [[deprecated]] E; enum class [[deprecated]] E; |
- | テンプレート特殊化 | template<> class [[deprecated]] X<int> {} |
+ | enum | enum [[deprecated]] E;<BR> enum class [[deprecated]] E; |
+ | テンプレート特殊化 | `template<> class [[deprecated]] X<int> {}` |
 
 また、deprecated指定無しで宣言のみされた名前は後でdeprecated付きで再宣言可能である。
 
